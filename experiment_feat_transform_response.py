@@ -188,7 +188,6 @@ if args.mode in ['random_feat', 'both']:
                 wandb_project_name, trial, metrics, 
                 n_epochs, create_callbacks, verbose=False)
 
-            print('trial results keys: ', trial_results.keys())
             for key in metric_keys:
                 results_dict[key][ip, trial] = trial_results[key]
 
