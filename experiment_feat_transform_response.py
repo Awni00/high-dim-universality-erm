@@ -96,14 +96,20 @@ if args.psi == 'clip':
     psi = lambda t: np.clip(t, -1, 1)
 elif args.psi == 'identity':
     psi = lambda t: t
+elif args.psi == 'abs':
+    psi = np.abs
 elif args.psi == 'sigmoid':
     psi = lambda t: 1 / (1+ np.exp(-t))
 elif args.psi == 'relu':
-    psi = lambda t: np.max(0, t)
+    psi = lambda t: np.maximum(0, t)
 elif args.psi == 'square':
     psi = lambda t: t**2
 elif args.psi == 'cube':
     psi = lambda t: t**3
+elif args.psi == 'cuberoot':
+    psi = lambda t: t**(1/3)
+elif args.psi == 'exp':
+    psi = np.exp
 else:
     raise ValueError(f"psi argument `{args.psi}` is invalid")
 
@@ -122,7 +128,7 @@ beta_star /= np.linalg.norm(beta_star, ord=2)
 
 ## generate response
 epsilon = np.random.normal(loc=0, scale=nu, size=(n,1))
-y = psi(Z)@beta_star + epsilon
+y = psi(Z) @ beta_star + epsilon
 
 
 # print data schema
